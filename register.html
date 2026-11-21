@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaFinans - Hesap Oluştur</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top right, #065f46 0%, #064e3b 45%, #022c22 100%);
+            padding: 20px;
+        }
+
+        .register-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 440px;
+            padding: 38px 34px;
+            border-radius: 22px;
+            box-shadow: 0 25px 60px rgba(2, 44, 34, 0.6), 0 0 30px rgba(212, 175, 55, 0.2);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .brand-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #b38728;
+            text-decoration: none;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-header h2 {
+            font-size: 22px;
+            color: #171717;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .brand-header p {
+            font-size: 14px;
+            color: #737373;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #171717;
+            outline: none;
+            background-color: #fafafa;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #d4af37;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+        }
+
+        .terms-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #525252;
+            margin-bottom: 22px;
+            cursor: pointer;
+        }
+
+        .terms-row input {
+            accent-color: #d4af37;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #d4af37 0%, #f6e69f 50%, #aa771c 100%);
+            color: #1a1608;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #f1d46b 0%, #fff6c9 50%, #c4912e 100%);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        .card-footer {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 14px;
+            color: #737373;
+        }
+
+        .card-footer a {
+            color: #b38728;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .card-footer a:hover {
+            color: #d4af37;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        
+        <div class="brand-header">
+            <a href="index.html" class="brand-logo">
+                <span>💳</span> NovaFinans
+            </a>
+            <h2>Hesap Oluştur</h2>
+            <p>Finans bilgilerinizi tek yerde takip etmeye başlayın.</p>
+        </div>
+
+        <form id="registerForm">
+            
+            <div class="form-group">
+                <label for="fullname">Ad Soyad</label>
+                <input 
+                    type="text" 
+                    id="fullname" 
+                    name="fullname"
+                    placeholder="Adınız ve Soyadınız" 
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-posta Adresi</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    placeholder="ornek@mail.com" 
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    placeholder="En az 6 karakter" 
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Şifre Tekrar</label>
+                <input 
+                    type="password" 
+                    id="confirm_password" 
+                    name="confirm_password"
+                    placeholder="Şifrenizi tekrar giriniz" 
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <label class="terms-row">
+                <input type="checkbox" required>
+                Kullanım koşullarını ve gizlilik politikasını onaylıyorum.
+            </label>
+
+            <button type="submit" class="btn-submit">Hesap Oluştur</button>
+
+        </form>
+
+        <div class="card-footer">
+            Zaten hesabınız var mı? <a href="index.html">Giriş Yap</a>
+        </div>
+
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('registerForm');
+
+        registerForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('fullname').value.trim();
+            const password = document.getElementById('password').value;
+            const passwordAgain = document.getElementById('confirm_password').value;
+
+            if (password !== passwordAgain) {
+                alert('Şifreler aynı değil. Lütfen tekrar kontrol edin.');
+                return;
+            }
+
+            localStorage.setItem('novaFinansUser', name);
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+
+</body>
+</html>

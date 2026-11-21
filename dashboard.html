@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaFinans - Yönetim Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --sidebar-bg: linear-gradient(180deg, #064e3b 0%, #04382a 100%);
+            --sidebar-active: linear-gradient(135deg, #d4af37 0%, #f6e69f 50%, #aa771c 100%);
+            --card-primary-bg: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+            --primary-accent: #059669;
+            --btn-theme: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            --btn-theme-text: #ffffff;
+            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f6e69f 50%, #aa771c 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f5;
+            color: #1e293b;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 28px 18px;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-brand {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fef08a;
+            margin-bottom: 40px;
+            padding-left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .sidebar-menu a.active {
+            background: var(--sidebar-active);
+            color: #1a1608;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding-top: 18px;
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            color: #fca5a5;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .logout-link:hover {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #ffffff;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8faf9;
+        }
+
+        .top-header {
+            height: 75px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 35px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 240px;
+            padding: 10px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 13px;
+            outline: none;
+            background-color: #f8fafc;
+            transition: border-color 0.2s;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 15px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .header-btn:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        .header-btn.highlight {
+            background: linear-gradient(135deg, #fef08a 0%, #facc15 100%);
+            border-color: #d4af37;
+            color: #1a1608;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: 8px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            color: #1a1608;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+        }
+
+        .user-info .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .user-info .user-role {
+            font-size: 12px;
+            color: #b38728;
+            font-weight: 600;
+        }
+
+        .dropdown-panel {
+            display: none;
+            position: absolute;
+            top: 75px;
+            right: 170px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            width: 280px;
+        }
+
+        .dropdown-panel.show {
+            display: block;
+        }
+
+        .edit-mode-banner {
+            display: none;
+            background: #1e1b4b;
+            color: #ffffff;
+            padding: 14px 35px;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            animation: slideDown 0.3s ease;
+        }
+
+        .edit-mode-banner.active {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .edit-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grid-select-group {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 4px;
+        }
+
+        .btn-grid-opt {
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-grid-opt.active {
+            background: #4338ca;
+            color: #ffffff;
+        }
+
+        .btn-banner-action {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-banner-add {
+            background: #10b981;
+            color: #ffffff;
+        }
+
+        .btn-banner-add:hover {
+            background: #059669;
+        }
+
+        .btn-banner-save {
+            background: var(--gold-gradient);
+            color: #1a1608;
+        }
+
+        .btn-banner-save:hover {
+            transform: scale(1.02);
+        }
+
+        .page-body {
+            padding: 35px;
+            flex: 1;
+        }
+
+        .welcome-banner {
+            margin-bottom: 25px;
+        }
+
+        .welcome-banner h1 {
+            font-size: 26px;
+            color: #0f172a;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .welcome-banner p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            gap: 22px;
+            grid-template-columns: repeat(3, 1fr);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-grid.col-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .dashboard-grid.col-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .dashboard-grid.col-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .widget-card.span-2 {
+            grid-column: span 2;
+        }
+
+        .widget-card {
+            background-color: #ffffff;
+            min-width: 0;
+            padding: 24px;
+            border-radius: 18px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .widget-card.widget-hidden {
+            display: none;
+        }
+
+        body.edit-mode .widget-card {
+            border: 2px dashed #d4af37 !important;
+            cursor: grab;
+            animation: pulseSubtle 2s infinite;
+        }
+
+        body.edit-mode .widget-card:active {
+            cursor: grabbing;
+        }
+
+        @keyframes pulseSubtle {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 15px 2px rgba(212, 175, 55, 0.3); }
+        }
+
+        .card-drag-handle {
+            display: none;
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            font-size: 14px;
+            color: #d4af37;
+            cursor: grab;
+        }
+
+        .card-remove-btn {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #ef4444;
+            color: #ffffff;
+            border: none;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+        }
+
+        body.edit-mode .card-drag-handle,
+        body.edit-mode .card-remove-btn {
+            display: flex;
+        }
+
+        .widget-card.dragging {
+            opacity: 0.35;
+            transform: scale(0.98);
+        }
+
+        .widget-card.drag-over {
+            border-color: #059669 !important;
+            transform: scale(1.02);
+        }
+
+        .widget-card.primary {
+            background: var(--card-primary-bg);
+            color: #ffffff;
+            border: 1.5px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .widget-card.primary .stat-title { color: #a7f3d0; }
+        .widget-card.primary .stat-value { color: #fef08a; }
+        .widget-card.primary .stat-subtitle { color: #34d399; }
+
+        .stat-title {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .stat-subtitle {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 72%;
+            height: 100%;
+            background: linear-gradient(90deg, #059669, #10b981);
+            border-radius: 10px;
+        }
+
+        .currency-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 13px;
+        }
+
+        .currency-row:last-child {
+            border-bottom: none;
+        }
+
+        .currency-badge-up {
+            color: #059669;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .cat-item {
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .cat-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .cat-bar {
+            height: 6px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .cat-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transaction-table th {
+            text-align: left;
+            padding: 10px 8px;
+            font-size: 12px;
+            color: #64748b;
+            border-bottom: 1px solid #e5e7eb;
+            font-weight: 700;
+        }
+
+        .transaction-table td {
+            padding: 12px 8px;
+            font-size: 13px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .amount-income { color: #059669; font-weight: 700; }
+        .amount-expense { color: #0f172a; font-weight: 700; }
+
+        .badge-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .quick-contacts {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .contact-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            color: #0f172a;
+            border: 1.5px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .contact-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .quick-transfer-form input {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        .btn-theme-action {
+            width: 100%;
+            padding: 12px;
+            background: var(--btn-theme);
+            color: var(--btn-theme-text);
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .widget-drawer-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .widget-drawer-backdrop.show {
+            display: block;
+        }
+
+        .widget-drawer {
+            position: fixed;
+            top: 0; right: -420px;
+            width: 400px;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .widget-drawer.show {
+            right: 0;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .drawer-item {
+            border: 1.5px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+            background: #f8fafc;
+            transition: all 0.2s;
+        }
+
+        .drawer-item:hover {
+            border-color: #d4af37;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .drawer-item h5 {
+            font-size: 14px;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .drawer-item p {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .btn-add-to-board {
+            width: 100%;
+            padding: 9px;
+            background: #1e1b4b;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-add-to-board:hover {
+            background: #059669;
+        }
+
+        .btn-add-to-board:disabled {
+            background: #cbd5e1;
+            cursor: default;
+        }
+
+        @media (max-width: 1100px) {
+            .dashboard-grid.col-2,
+            .dashboard-grid.col-3,
+            .dashboard-grid.col-4 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 800px) {
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 16px;
+            }
+
+            .sidebar-brand {
+                margin-bottom: 14px;
+            }
+
+            .sidebar-menu {
+                flex-direction: row;
+                flex: none;
+                overflow-x: auto;
+                padding-bottom: 6px;
+            }
+
+            .sidebar-menu li {
+                flex: 0 0 auto;
+            }
+
+            .sidebar-menu a {
+                white-space: nowrap;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .top-header {
+                height: auto;
+                min-height: 70px;
+                padding: 12px 18px;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            .search-box {
+                flex: 1;
+                min-width: 210px;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .header-actions {
+                margin-left: auto;
+            }
+
+            .dropdown-panel {
+                top: 100%;
+                right: 18px;
+            }
+
+            .edit-mode-banner {
+                padding: 14px 18px;
+                gap: 14px;
+                flex-wrap: wrap;
+            }
+
+            .edit-controls {
+                flex-wrap: wrap;
+            }
+
+            .page-body {
+                padding: 24px 18px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+                margin-left: 0;
+            }
+
+            .header-user {
+                display: none;
+            }
+
+            .dashboard-grid.col-2,
+            .dashboard-grid.col-3,
+            .dashboard-grid.col-4 {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .widget-card.span-2 {
+                grid-column: span 1;
+                overflow-x: auto;
+            }
+
+            .widget-card {
+                padding: 20px;
+            }
+
+            .welcome-banner h1 {
+                font-size: 23px;
+            }
+
+            .widget-drawer {
+                width: 100%;
+                right: -100%;
+            }
+
+            .widget-drawer.show {
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <span>💳</span>
+                <span>NovaFinans</span>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><span>📊</span> <span>Genel Bakış</span></a></li>
+                <li><a href="#"><span>💳</span> <span>Hesaplarım</span></a></li>
+                <li><a href="#"><span>💸</span> <span>Para Transferi</span></a></li>
+                <li><a href="#"><span>🧾</span> <span>Faturalar</span></a></li>
+                <li><a href="#"><span>📈</span> <span>Yatırımlar</span></a></li>
+                <li><a href="#"><span>⚙️</span> <span>Ayarlar</span></a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-link">
+                    <span>🚪</span>
+                    <span>Çıkış Yap</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="top-header">
+                <div class="search-box">
+                    <input type="text" placeholder="İşlem, hesap veya kişi ara...">
+                </div>
+
+                <div class="header-actions">
+                    <button type="button" class="header-btn highlight" id="btnEditMode" onclick="toggleEditMode()">
+                        <span>🛠️</span> Paneli Özelleştir
+                    </button>
+
+                    <button type="button" class="header-btn" onclick="toggleThemePanel()">
+                        <span>🎨</span> Tema
+                    </button>
+
+                    <div class="header-user">
+                        <div class="user-avatar" id="avatarInitials">ZM</div>
+                        <div class="user-info">
+                            <div class="user-name" id="displayUserName">Zarif Melisa</div>
+                            <div class="user-role">Bireysel Hesap</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown-panel" id="themePanel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: 700; font-size: 14px;">
+                        <span>Renk Teması</span>
+                        <span style="cursor: pointer;" onclick="toggleThemePanel()">✕</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <button type="button" class="header-btn" onclick="applyAndSaveTheme('emerald')">🌿 Zümrüt</button>
+                        <button type="button" class="header-btn" onclick="applyAndSaveTheme('navy')">💎 Mavi</button>
+                        <button type="button" class="header-btn" onclick="applyAndSaveTheme('black')">🖤 Siyah</button>
+                        <button type="button" class="header-btn" onclick="applyAndSaveTheme('burgundy')">🍷 Bordo</button>
+                    </div>
+                </div>
+
+            </header>
+
+            <div class="edit-mode-banner" id="editModeBanner">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 18px;">🎨</span>
+                    <div>
+                        <strong style="font-size: 13px;">Panel düzenleme açık:</strong>
+                        <span style="font-size: 12px; color: #cbd5e1; margin-left: 6px;">Kartları tutup sürükleyerek yerlerini değiştirin.</span>
+                    </div>
+                </div>
+
+                <div class="edit-controls">
+                    <div class="grid-select-group">
+                        <button class="btn-grid-opt" data-columns="col-2" onclick="setGridColumns('col-2', this)">2 Sütun</button>
+                        <button class="btn-grid-opt active" data-columns="col-3" onclick="setGridColumns('col-3', this)">3 Sütun</button>
+                        <button class="btn-grid-opt" data-columns="col-4" onclick="setGridColumns('col-4', this)">4 Sütun</button>
+                    </div>
+
+                    <button class="btn-banner-action btn-banner-add" onclick="openWidgetDrawer()">
+                        + Kart Ekle
+                    </button>
+
+                    <button class="btn-banner-action btn-banner-save" onclick="toggleEditMode()">
+                        💾 Düzeni Kaydet
+                    </button>
+                </div>
+            </div>
+
+            <div class="page-body">
+                
+                <section class="welcome-banner">
+                    <h1 id="welcomeTitle">Hoş Geldin, Melisa! 👋</h1>
+                    <p>Kartları düzenleyerek gelir, gider ve birikimlerinizi tek ekranda takip edebilirsiniz.</p>
+                </section>
+
+                <div class="dashboard-grid col-3" id="dashboardGrid">
+                    
+                    <div class="widget-card primary" id="w-balance" data-id="w-balance" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-balance')">✕</button>
+                        
+                        <div class="stat-title">Toplam Varlık</div>
+                        <div class="stat-value">₺184.500,00</div>
+                        <div class="stat-subtitle">✨ +%14,8 bu ay büyüme</div>
+                    </div>
+
+                    <div class="widget-card" id="w-income" data-id="w-income" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-income')">✕</button>
+
+                        <div class="stat-title">Aylık Gelir</div>
+                        <div class="stat-value" style="color: #059669;">+₺48.200,00</div>
+                        <div class="stat-subtitle" style="color: #059669;">↑ 3 farklı kaynaktan</div>
+                    </div>
+
+                    <div class="widget-card" id="w-expense" data-id="w-expense" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-expense')">✕</button>
+
+                        <div class="stat-title">Aylık Harcama</div>
+                        <div class="stat-value" style="color: #e11d48;">-₺14.650,00</div>
+                        <div class="stat-subtitle" style="color: #64748b;">Bütçe sınırları dahilinde</div>
+                    </div>
+
+                    <div class="widget-card" id="w-budget" data-id="w-budget" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-budget')">✕</button>
+
+                        <div class="stat-title">Tasarruf Hedefi</div>
+                        <div class="stat-value" style="color: #d4af37;">₺25.000 / ₺35.000</div>
+                        <div class="stat-subtitle" style="color: #059669;">Hedefe %72 ulaşıldı</div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="widget-card" id="w-currency" data-id="w-currency" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-currency')">✕</button>
+
+                        <div class="stat-title">Piyasa Özeti</div>
+                        <div class="currency-row">
+                            <span>🪙 Gram Altın</span>
+                            <span class="currency-badge-up">₺2.842,50 ▲ %1.2</span>
+                        </div>
+                        <div class="currency-row">
+                            <span>💵 Dolar (USD)</span>
+                            <span class="currency-badge-up">₺34,15 ▲ %0.4</span>
+                        </div>
+                        <div class="currency-row">
+                            <span>💶 Euro (EUR)</span>
+                            <span class="currency-badge-up">₺37,85 ▲ %0.6</span>
+                        </div>
+                    </div>
+
+                    <div class="widget-card" id="w-categories" data-id="w-categories" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-categories')">✕</button>
+
+                        <div class="stat-title">Harcama Dağılımı</div>
+                        <div class="cat-item">
+                            <div class="cat-header"><span>Konut & Kira</span><span>%55</span></div>
+                            <div class="cat-bar"><div class="cat-fill" style="width: 55%; background: #ef4444;"></div></div>
+                        </div>
+                        <div class="cat-item">
+                            <div class="cat-header"><span>Market & Gıda</span><span>%25</span></div>
+                            <div class="cat-bar"><div class="cat-fill" style="width: 25%; background: #f59e0b;"></div></div>
+                        </div>
+                        <div class="cat-item">
+                            <div class="cat-header"><span>Teknoloji & Eğlence</span><span>%20</span></div>
+                            <div class="cat-bar"><div class="cat-fill" style="width: 20%; background: #059669;"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="widget-card span-2" id="w-table" data-id="w-table" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-table')">✕</button>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="font-size: 16px; font-weight: 700; color: #0f172a;">Son Hesap Hareketleri</h3>
+                            <a href="#" style="font-size: 12px; color: var(--primary-accent); text-decoration: none; font-weight: 700;">Tümünü Gör</a>
+                        </div>
+
+                        <table class="transaction-table">
+                            <thead>
+                                <tr>
+                                    <th>Açıklama</th>
+                                    <th>Kategori</th>
+                                    <th>Tarih</th>
+                                    <th>Tutar</th>
+                                    <th>Durum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Freelance UI/UX Tasarım</strong></td>
+                                    <td>Gelir</td>
+                                    <td>12 Eylül 2026</td>
+                                    <td class="amount-income">+₺24.000,00</td>
+                                    <td><span class="badge-status badge-success">Başarılı</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Apple Store Abonelik</strong></td>
+                                    <td>Teknoloji</td>
+                                    <td>10 Eylül 2026</td>
+                                    <td class="amount-expense">-₺299,99</td>
+                                    <td><span class="badge-status badge-success">Başarılı</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Macrocenter Market</strong></td>
+                                    <td>Market</td>
+                                    <td>07 Eylül 2026</td>
+                                    <td class="amount-expense">-₺1.850,00</td>
+                                    <td><span class="badge-status badge-success">Başarılı</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="widget-card" id="w-transfer" data-id="w-transfer" draggable="false">
+                        <span class="card-drag-handle">⋮⋮</span>
+                        <button class="card-remove-btn" onclick="removeWidget('w-transfer')">✕</button>
+
+                        <h3 style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 14px;">Hızlı Transfer</h3>
+
+                        <div class="quick-contacts">
+                            <div class="contact-item">
+                                <div class="contact-avatar">CB</div>
+                                <span class="contact-name">Canberk</span>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-avatar">AK</div>
+                                <span class="contact-name">Ayşe</span>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-avatar">MY</div>
+                                <span class="contact-name">Mehmet</span>
+                            </div>
+                        </div>
+
+                        <div class="quick-transfer-form">
+                            <input type="number" placeholder="0.00" value="1000">
+                            <button type="button" class="btn-theme-action" onclick="alert('Transfer başarıyla iletildi!')">Hemen Gönder</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <div class="widget-drawer-backdrop" id="drawerBackdrop" onclick="closeWidgetDrawer()"></div>
+    <div class="widget-drawer" id="widgetDrawer">
+        <div class="drawer-header">
+            <h4>Kartlar</h4>
+            <span style="cursor: pointer; font-size: 18px;" onclick="closeWidgetDrawer()">✕</span>
+        </div>
+        <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">Panonuza eklemek istediğiniz kartı seçin:</p>
+
+        <div id="drawerItemsList"></div>
+    </div>
+
+    <script>
+        let isEditMode = false;
+        const dashboardGrid = document.getElementById('dashboardGrid');
+
+        const availableCards = {
+            'w-balance': { name: '💰 Toplam Varlık', description: 'Toplam bakiye ve aylık değişim.' },
+            'w-income': { name: '📈 Aylık Gelir', description: 'Son 30 günün toplam geliri.' },
+            'w-expense': { name: '📉 Aylık Harcama', description: 'Bu ay yapılan harcamalar.' },
+            'w-budget': { name: '🎯 Tasarruf Hedefi', description: 'Birikim hedefinin ilerleme durumu.' },
+            'w-currency': { name: '🪙 Piyasa Özeti', description: 'Örnek altın, dolar ve euro bilgileri.' },
+            'w-categories': { name: '📊 Harcama Dağılımı', description: 'Harcamaların kategorilere göre dağılımı.' },
+            'w-table': { name: '🧾 Son Hesap Hareketleri', description: 'Yakın tarihli gelir ve giderler.' },
+            'w-transfer': { name: '💸 Hızlı Transfer', description: 'Kayıtlı kişiye para gönderme alanı.' }
+        };
+
+        const themes = {
+            emerald: {
+                '--sidebar-bg': 'linear-gradient(180deg, #064e3b 0%, #04382a 100%)',
+                '--card-primary-bg': 'linear-gradient(135deg, #064e3b 0%, #022c22 100%)',
+                '--primary-accent': '#059669',
+                '--btn-theme': 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+                '--btn-theme-text': '#ffffff'
+            },
+            navy: {
+                '--sidebar-bg': 'linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%)',
+                '--card-primary-bg': 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)',
+                '--primary-accent': '#4338ca',
+                '--btn-theme': 'linear-gradient(135deg, #4338ca 0%, #6366f1 100%)',
+                '--btn-theme-text': '#ffffff'
+            },
+            black: {
+                '--sidebar-bg': 'linear-gradient(180deg, #18181b 0%, #09090b 100%)',
+                '--card-primary-bg': 'linear-gradient(135deg, #27272a 0%, #09090b 100%)',
+                '--primary-accent': '#d4af37',
+                '--btn-theme': 'linear-gradient(135deg, #d4af37 0%, #f6e69f 50%, #aa771c 100%)',
+                '--btn-theme-text': '#1a1608'
+            },
+            burgundy: {
+                '--sidebar-bg': 'linear-gradient(180deg, #4c0519 0%, #1f020a 100%)',
+                '--card-primary-bg': 'linear-gradient(135deg, #4c0519 0%, #831843 100%)',
+                '--primary-accent': '#be123c',
+                '--btn-theme': 'linear-gradient(135deg, #be123c 0%, #fb7185 100%)',
+                '--btn-theme-text': '#ffffff'
+            }
+        };
+
+        function toggleThemePanel() {
+            document.getElementById('themePanel').classList.toggle('show');
+        }
+
+        function applyAndSaveTheme(themeName) {
+            const selectedTheme = themes[themeName];
+            if (!selectedTheme) return;
+
+            const root = document.documentElement;
+            Object.entries(selectedTheme).forEach(function ([property, value]) {
+                root.style.setProperty(property, value);
+            });
+
+            localStorage.setItem('novaFinansTheme', themeName);
+            document.getElementById('themePanel').classList.remove('show');
+        }
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            document.body.classList.toggle('edit-mode', isEditMode);
+            document.getElementById('editModeBanner').classList.toggle('active', isEditMode);
+
+            const editButton = document.getElementById('btnEditMode');
+            if (isEditMode) {
+                editButton.innerHTML = '<span>✅</span> Düzenlemeyi Bitir';
+                enableDragAndDrop();
+            } else {
+                editButton.innerHTML = '<span>🛠️</span> Paneli Özelleştir';
+                disableDragAndDrop();
+                saveDashboardState();
+            }
+        }
+
+        function enableDragAndDrop() {
+            const cards = dashboardGrid.querySelectorAll('.widget-card:not(.widget-hidden)');
+
+            cards.forEach(function (card) {
+                card.setAttribute('draggable', 'true');
+
+                card.ondragstart = function (event) {
+                    card.classList.add('dragging');
+                    event.dataTransfer.setData('text/plain', card.id);
+                };
+
+                card.ondragend = function () {
+                    card.classList.remove('dragging');
+                    cards.forEach(function (item) {
+                        item.classList.remove('drag-over');
+                    });
+                };
+
+                card.ondragover = function (event) {
+                    event.preventDefault();
+                    card.classList.add('drag-over');
+                };
+
+                card.ondragleave = function () {
+                    card.classList.remove('drag-over');
+                };
+
+                card.ondrop = function (event) {
+                    event.preventDefault();
+                    card.classList.remove('drag-over');
+
+                    const draggedCard = document.getElementById(event.dataTransfer.getData('text/plain'));
+                    if (!draggedCard || draggedCard === card) return;
+
+                    const cardsInGrid = Array.from(dashboardGrid.children);
+                    const draggedIndex = cardsInGrid.indexOf(draggedCard);
+                    const targetIndex = cardsInGrid.indexOf(card);
+
+                    if (draggedIndex < targetIndex) {
+                        dashboardGrid.insertBefore(draggedCard, card.nextSibling);
+                    } else {
+                        dashboardGrid.insertBefore(draggedCard, card);
+                    }
+                };
+            });
+        }
+
+        function disableDragAndDrop() {
+            const cards = dashboardGrid.querySelectorAll('.widget-card');
+
+            cards.forEach(function (card) {
+                card.setAttribute('draggable', 'false');
+                card.ondragstart = null;
+                card.ondragend = null;
+                card.ondragover = null;
+                card.ondragleave = null;
+                card.ondrop = null;
+            });
+        }
+
+        function setGridColumns(columnClass, clickedButton) {
+            const validColumns = ['col-2', 'col-3', 'col-4'];
+            if (!validColumns.includes(columnClass)) return;
+
+            dashboardGrid.classList.remove(...validColumns);
+            dashboardGrid.classList.add(columnClass);
+
+            document.querySelectorAll('.btn-grid-opt').forEach(function (button) {
+                button.classList.toggle('active', button === clickedButton);
+            });
+
+            localStorage.setItem('novaGridCol', columnClass);
+        }
+
+        function removeWidget(id) {
+            const card = document.getElementById(id);
+            if (!card) return;
+
+            card.classList.add('widget-hidden');
+            card.setAttribute('draggable', 'false');
+            saveDashboardState();
+        }
+
+        function openWidgetDrawer() {
+            const drawerList = document.getElementById('drawerItemsList');
+            drawerList.innerHTML = '';
+
+            Object.keys(availableCards).forEach(function (id) {
+                const cardInfo = availableCards[id];
+                const card = document.getElementById(id);
+                const isOnDashboard = card && !card.classList.contains('widget-hidden');
+
+                const item = document.createElement('div');
+                item.className = 'drawer-item';
+                item.innerHTML = `
+                    <h5>${cardInfo.name}</h5>
+                    <p>${cardInfo.description}</p>
+                    <button type="button" class="btn-add-to-board" onclick="addWidgetToBoard('${id}')" ${isOnDashboard ? 'disabled' : ''}>
+                        ${isOnDashboard ? '✓ Panelde ekli' : '+ Panele ekle'}
+                    </button>
+                `;
+                drawerList.appendChild(item);
+            });
+
+            document.getElementById('widgetDrawer').classList.add('show');
+            document.getElementById('drawerBackdrop').classList.add('show');
+        }
+
+        function closeWidgetDrawer() {
+            document.getElementById('widgetDrawer').classList.remove('show');
+            document.getElementById('drawerBackdrop').classList.remove('show');
+        }
+
+        function addWidgetToBoard(id) {
+            const card = document.getElementById(id);
+            if (!card) return;
+
+            card.classList.remove('widget-hidden');
+            dashboardGrid.appendChild(card);
+            saveDashboardState();
+
+            if (isEditMode) enableDragAndDrop();
+            openWidgetDrawer();
+        }
+
+        function saveDashboardState() {
+            const cards = Array.from(dashboardGrid.children);
+            const order = cards.map(function (card) { return card.id; });
+            const hiddenCards = cards
+                .filter(function (card) { return card.classList.contains('widget-hidden'); })
+                .map(function (card) { return card.id; });
+
+            localStorage.setItem('novaSavedWidgetOrder', JSON.stringify(order));
+            localStorage.setItem('novaHiddenWidgets', JSON.stringify(hiddenCards));
+        }
+
+        function readSavedList(key) {
+            try {
+                const value = JSON.parse(localStorage.getItem(key));
+                return Array.isArray(value) ? value : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function loadUserName() {
+            const savedName = localStorage.getItem('novaFinansUser');
+            if (!savedName) return;
+
+            const nameParts = savedName.trim().split(/\s+/);
+            const firstName = nameParts[0];
+            const lastName = nameParts[nameParts.length - 1];
+            const initials = nameParts.length > 1
+                ? firstName[0] + lastName[0]
+                : firstName.slice(0, 2);
+
+            document.getElementById('displayUserName').innerText = savedName;
+            document.getElementById('welcomeTitle').innerText = 'Hoş Geldin, ' + firstName + '! 👋';
+            document.getElementById('avatarInitials').innerText = initials.toUpperCase();
+        }
+
+        function loadDashboardSettings() {
+            const savedTheme = localStorage.getItem('novaFinansTheme');
+            if (savedTheme) applyAndSaveTheme(savedTheme);
+
+            const savedColumns = localStorage.getItem('novaGridCol');
+            const columnButton = document.querySelector(`[data-columns="${savedColumns}"]`);
+            if (columnButton) setGridColumns(savedColumns, columnButton);
+
+            readSavedList('novaSavedWidgetOrder').forEach(function (id) {
+                const card = document.getElementById(id);
+                if (card) dashboardGrid.appendChild(card);
+            });
+
+            readSavedList('novaHiddenWidgets').forEach(function (id) {
+                const card = document.getElementById(id);
+                if (card) card.classList.add('widget-hidden');
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            loadUserName();
+            loadDashboardSettings();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaFinans - Giriş Yap</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at top right, #065f46 0%, #064e3b 45%, #022c22 100%);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 42px 34px;
+            border-radius: 22px;
+            box-shadow: 0 25px 60px rgba(2, 44, 34, 0.6), 0 0 30px rgba(212, 175, 55, 0.2);
+            border: 1.5px solid rgba(212, 175, 55, 0.45);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 26px;
+            font-weight: 800;
+            color: #b38728;
+            text-decoration: none;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-header h2 {
+            font-size: 22px;
+            color: #171717;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .brand-header p {
+            font-size: 14px;
+            color: #737373;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #262626;
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1.5px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #171717;
+            outline: none;
+            background-color: #fafafa;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #d4af37;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .remember-box {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #525252;
+            cursor: pointer;
+        }
+
+        .remember-box input {
+            accent-color: #d4af37;
+        }
+
+        .forgot-pass {
+            color: #b38728;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-pass:hover {
+            color: #d4af37;
+            text-decoration: underline;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #d4af37 0%, #f6e69f 50%, #aa771c 100%);
+            color: #1a1608;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #f1d46b 0%, #fff6c9 50%, #c4912e 100%);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        .card-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #737373;
+        }
+
+        .card-footer a {
+            color: #b38728;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .card-footer a:hover {
+            color: #d4af37;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        
+        <div class="brand-header">
+            <a href="index.html" class="brand-logo">
+                <span>💳</span> NovaFinans
+            </a>
+            <h2>Tekrar Hoş Geldiniz</h2>
+            <p>Gelir ve giderlerinizi takip etmek için giriş yapın.</p>
+        </div>
+
+        <form action="dashboard.html" method="GET">
+            
+            <div class="form-group">
+                <label for="email">E-posta Adresi</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    placeholder="ornek@mail.com" 
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    placeholder="••••••••" 
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <div class="form-row">
+                <label class="remember-box">
+                    <input type="checkbox">
+                    Beni Hatırla
+                </label>
+                <a href="#" class="forgot-pass">Şifremi Unuttum?</a>
+            </div>
+
+            <button type="submit" class="btn-submit">Giriş Yap</button>
+
+        </form>
+
+        <div class="card-footer">
+            Henüz hesabınız yok mu? <a href="register.html">Kayıt Ol</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
